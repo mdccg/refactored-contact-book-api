@@ -1,9 +1,9 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv-flow'
 
 dotenv.config()
 
-import { app } from './app'
 import { connection } from 'mongoose'
+import { app } from './app'
 
 const PORT = process.env.PORT || 3000
 const server = app.listen(PORT, () =>

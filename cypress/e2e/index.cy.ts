@@ -1,11 +1,11 @@
 describe('Tests over API index', () => {
-  beforeEach(() => cy.visit(''));
-
   it('should return welcome message', () => {
-    cy.request({
+    const requestOptions: Partial<Cypress.RequestOptions> = {
       method: 'GET',
       url: '/'
-    })
+    };
+
+    cy.request(requestOptions)
       .then((response) => {
         const { body } = response;
         expect(body).to.equal('Contact Book API');

@@ -16,9 +16,12 @@ export default defineConfig({
     baseUrl: 'http://localhost:3001',
     setupNodeEvents(on, config) {
       on('task', {
-        
+        async clearContacts() {
+          await db?.collection('contacts').deleteMany({});
+          return null;
+        }
       });
-    }
+    },
   },
   video: false,
 });

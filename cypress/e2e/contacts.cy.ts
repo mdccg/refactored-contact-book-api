@@ -1,21 +1,32 @@
-let requestOptions: Partial<Cypress.RequestOptions> = {
+const requestOptions: Partial<Cypress.RequestOptions> = {
   method: 'POST',
   url: '/contacts',
   failOnStatusCode: false,
 };
 
+var fixtures = new Map<string, any>();
+
 describe('Tests over /contacts path', () => {
-  beforeEach(() => {
-    cy.task('clearContacts');
-    cy.fixture('contact').then((contact) => (this.contact = contact));
-    cy.fixture('invalidBirthdayContact').then((contact) => (this.invalidBirthdayContact = contact));
-    cy.fixture('invalidEmailContact').then((contact) => (this.invalidEmailContact = contact));
-    cy.fixture('invalidNameContact').then((contact) => (this.invalidNameContact = contact));
-    cy.fixture('invalidPhoneContact').then((contact) => (this.invalidPhoneContact = contact));
+  before(() => {
+    const fixturesNames: string[] = [
+      'contact',
+      'invalidBirthdayContact',
+      'invalidEmailContact',
+      'invalidNameContact',
+      'invalidPhoneContact'
+    ];
+
+    fixturesNames.forEach((fixtureName: string) => {
+      cy.fixture(fixtureName).then((fixture: any) => {
+        this.fixtures.set(fixtureName, fixture);
+      });
+    });
   });
 
+  beforeEach(() => cy.task('clearContacts'));
+
   it('should save a valid contact', () => {
-    requestOptions.body = <Cypress.RequestBody>this.contact;
+    requestOptions.body = <Cypress.RequestBody>this.fixtures['contact'];
 
     cy.log(JSON.stringify(requestOptions));
     expect(true).to.equal(!false);
@@ -29,7 +40,7 @@ describe('Tests over /contacts path', () => {
   });
 
   it('should not save a contact with invalid birthday', () => {
-    requestOptions.body = <Cypress.RequestBody>this.invalidBirthdayContact;
+    requestOptions.body = <Cypress.RequestBody>this.fixtures['invalidBirthdayContact'];
   
     cy.log(JSON.stringify(requestOptions));
     expect(true).to.equal(!false);
@@ -43,7 +54,7 @@ describe('Tests over /contacts path', () => {
   });
 
   it('should not save a contact with invalid email', () => {
-    requestOptions.body = <Cypress.RequestBody>this.invalidEmailContact;
+    requestOptions.body = <Cypress.RequestBody>this.fixtures['invalidEmailContact'];
   
     cy.request(requestOptions)
       .then(({ body, status }) => { 
@@ -54,7 +65,7 @@ describe('Tests over /contacts path', () => {
   });
 
   it('should not save a contact with invalid name', () => {
-    requestOptions.body = <Cypress.RequestBody>this.invalidNameContact;
+    requestOptions.body = <Cypress.RequestBody>this.fixtures['invalidNameContact'];
   
     cy.request(requestOptions)
       .then(({ body, status }) => { 
@@ -65,7 +76,7 @@ describe('Tests over /contacts path', () => {
   });
 
   it('should not save a contact with invalid phone', () => {
-    requestOptions.body = <Cypress.RequestBody>this.invalidPhoneContact;
+    requestOptions.body = <Cypress.RequestBody>this.fixtures['invalidPhoneContact'];
   
     cy.request(requestOptions)
       .then(({ body, status }) => { 

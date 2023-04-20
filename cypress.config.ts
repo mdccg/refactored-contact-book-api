@@ -17,6 +17,8 @@ const POPULATION_SIZE = 100;
 type PopulateType = {
   lastname: string;
   populationSize: number;
+  startDate: Date;
+  endDate: Date;
 }
 
 export default defineConfig({
@@ -29,20 +31,22 @@ export default defineConfig({
           return null;
         },
 
-        async populateContacts({ lastname, populationSize }: PopulateType) {
-          const size = populationSize < 2 ? 2 : populationSize;
-          const lastName = !lastname ? faker.name.lastName() : lastname;
+        async populateContacts({ lastname, populationSize, startDate, endDate }: PopulateType) {
+          // Definindo valores padrão
+          const size = populationSize > 1    ? populationSize : 2;
+          const contactLastName = lastname   ? lastname : faker.name.lastName();
+          const contactStartDate = startDate ? startDate : new Date('2001-11-27');
+          const contactEndDate = endDate     ? endDate : new Date('2001-11-27');
 
           for (let i = 0; i < size; ++i) {
-            const options = i < size / 2 ? { lastName } : undefined;
-            const name = faker.name.fullName(options);
+            const isItInFirstHalf = i < size / 2;
+            
+            const name = isItInFirstHalf ? faker.name.fullName({ lastName: contactLastName }) : faker.name.fullName();
+            const email = faker.internet.email(name);
+            const phone = faker.phone.number('(##) 9####-####');
+            const birthday = isItInFirstHalf ? faker.date.between(contactStartDate, contactEndDate) : faker.date.birthdate();
 
-            const contact = new ContactModel({
-              name,
-              email: faker.internet.email(name),
-              phone: faker.phone.number('(##) 9####-####'),
-              birthday: faker.date.birthdate({ min: 18, max: 60 }),
-            });
+            const contact = new ContactModel({ name, email, phone, birthday });
 
             await db?.collection('contacts').insertOne(contact);
           }

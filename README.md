@@ -22,7 +22,7 @@ Neste repositório de código, há apenas testes de ponta a ponta e estão dispo
 
 Este foi o terceiro repositório de código apresentado no [Curso Superior de TSI do IFMS](https://www.ifms.edu.br/campi/campus-aquidauana/cursos/graduacao/sistemas-para-internet/sistemas-para-internet) como requisito para obtenção da nota parcial das atividades da unidade curricular Linguagem de Programação III.
 
-| [&larr; Repositório anterior](https://github.com/mdccg/contact-book-api) | [Próximo repositório &rarr;](#) |
+| [&larr; Repositório anterior](https://github.com/mdccg/contact-book-api) | [Próximo repositório &rarr;](https://github.com/mdccg/postal-code-api) |
 |-|-|
 
 ## Pilha de tecnologia

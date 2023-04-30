@@ -83,20 +83,6 @@ Mas, não se preocupe. As tuplas inseridas no banco de dados não serão deletad
 Para npm:
 
 ```console
-$ npm run dev
-```
-
-Para Yarn:
-
-```console
-$ yarn dev
-```
-
-6. Por fim, execute o seguinte comando para testar a API iniciada:
-
-Para npm:
-
-```console
 $ npm run test
 ```
 
@@ -104,4 +90,18 @@ Para Yarn:
 
 ```console
 $ yarn test
+```
+
+6. Por fim, execute o seguinte comando para testar a API iniciada:
+
+Para npm:
+
+```console
+$ npm run cy:run
+```
+
+Para Yarn:
+
+```console
+$ yarn cy:run
 ```
